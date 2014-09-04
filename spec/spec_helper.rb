@@ -1,0 +1,1 @@
+require 'attributed_string'
