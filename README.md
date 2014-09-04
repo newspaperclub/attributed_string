@@ -10,7 +10,7 @@ This is useful for storing string formatting information separately from the pla
 string    = "This is a test"
 range     = Range.new(0, 3)
 data      = { weight: :bold }
-# This marks the first word as being bold. The implementation of your data is up to you, but here we use a simple Hash.
+# This marks the first word as being bold. The implementation of the data is up to you, but here we use a simple Hash.
 attribute = AttributedString::Attribute.new(range, data)
 
 attributed_string = AttributedString.new(string, [attribute])
