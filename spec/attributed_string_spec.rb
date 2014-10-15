@@ -75,4 +75,80 @@ describe AttributedString do
       expect(subject.attributes[2].range).to eq(Range.new(0, 7))
     end
   end
+
+  describe '.fix' do
+    before do
+      subject.fix
+    end
+
+    context 'with non-overlapping attributes' do
+      it "preserves the attributes" do
+        expect(subject.attributes).to eq(attributes)
+      end
+    end
+
+    context 'with two overlapping attributes' do
+      let(:attributes) do
+        [
+          AttributedString::Attribute.new(Range.new(0, 8), { weight: :bold }),
+          AttributedString::Attribute.new(Range.new(6, 11), { weight: :bold }),
+        ]
+      end
+
+      it "reduces to 1 attribute" do
+        expect(subject.attributes.length).to eq(1)
+      end
+
+      it "has the right data" do
+        expect(subject.attributes.first.data).to eq({ weight: :bold })
+      end
+
+      it "has the right range" do
+        expect(subject.attributes.first.range).to eq(Range.new(0, 11))
+      end
+    end
+
+    context 'with two overlapping attributes in reverse order' do
+      let(:attributes) do
+        [
+          AttributedString::Attribute.new(Range.new(6, 11), { weight: :bold }),
+          AttributedString::Attribute.new(Range.new(0, 8), { weight: :bold }),
+        ]
+      end
+
+      it "reduces to 1 attribute" do
+        expect(subject.attributes.length).to eq(1)
+      end
+
+      it "has the right data" do
+        expect(subject.attributes.first.data).to eq({ weight: :bold })
+      end
+
+      it "has the right range" do
+        expect(subject.attributes.first.range).to eq(Range.new(0, 11))
+      end
+    end
+
+    context 'with three overlapping attributes' do
+      let(:attributes) do
+        [
+          AttributedString::Attribute.new(Range.new(0, 8), { weight: :bold }),
+          AttributedString::Attribute.new(Range.new(6, 11), { weight: :bold }),
+          AttributedString::Attribute.new(Range.new(10, 11), { weight: :bold }),
+        ]
+      end
+
+      it "reduces to 1 attribute" do
+        expect(subject.attributes.length).to eq(1)
+      end
+
+      it "has the right data" do
+        expect(subject.attributes.first.data).to eq({ weight: :bold })
+      end
+
+      it "has the right range" do
+        expect(subject.attributes.first.range).to eq(Range.new(0, 11))
+      end
+    end
+  end
 end

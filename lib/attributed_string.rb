@@ -25,12 +25,31 @@ class AttributedString
     @string.length
   end
 
+  def fix
+    @attributes = @attributes.sort_by { |a| a.range.begin }.inject([]) do |attrs, a|
+      if !attrs.empty? && attributes_overlap?(attrs.last, a)
+        attrs[0...-1] + [merge_attributes(attrs.last, a)]
+      else
+        attrs + [a]
+      end
+    end
+  end
+
   private
 
   def move_attributes(offset)
     @attributes.each do |attribute|
       attribute.move(offset)
     end
+  end
+
+  def attributes_overlap?(a, b)
+    a.data == b.data && (a.range.include?(b.range.begin) || b.range.include?(a.range.begin))
+  end
+
+  def merge_attributes(a, b)
+    range = [a.range.begin, b.range.begin].min..[a.range.end, b.range.end].max
+    AttributedString::Attribute.new(range, a.data)
   end
 
 end
