@@ -108,6 +108,27 @@ describe AttributedString do
       end
     end
 
+    context 'with two touching attributes' do
+      let(:attributes) do
+        [
+          AttributedString::Attribute.new(Range.new(0, 8), { weight: :bold }),
+          AttributedString::Attribute.new(Range.new(8, 11), { weight: :bold }),
+        ]
+      end
+
+      it "reduces to 1 attribute" do
+        expect(subject.attributes.length).to eq(1)
+      end
+
+      it "has the right data" do
+        expect(subject.attributes.first.data).to eq({ weight: :bold })
+      end
+
+      it "has the right range" do
+        expect(subject.attributes.first.range).to eq(Range.new(0, 11))
+      end
+    end
+
     context 'with two overlapping attributes in reverse order' do
       let(:attributes) do
         [
