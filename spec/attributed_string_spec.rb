@@ -171,5 +171,35 @@ describe AttributedString do
         expect(subject.attributes.first.range).to eq(Range.new(0, 11))
       end
     end
+
+    context 'with three attributes, two of which are the same' do
+      let(:attributes) do
+        [
+          AttributedString::Attribute.new(Range.new(0, 8), { weight: :bold }),
+          AttributedString::Attribute.new(Range.new(6, 13), { style: :italic }),
+          AttributedString::Attribute.new(Range.new(8, 11), { weight: :bold }),
+        ]
+      end
+
+      it "reduces to 2 attributes" do
+        expect(subject.attributes.length).to eq(2)
+      end
+
+      it "has the right data for the first" do
+        expect(subject.attributes.first.data).to eq({ weight: :bold })
+      end
+
+      it "has the right range for the first" do
+        expect(subject.attributes.first.range).to eq(Range.new(0, 11))
+      end
+
+      it "has the right data for the second" do
+        expect(subject.attributes[1].data).to eq({ style: :italic })
+      end
+
+      it "has the right range for the first" do
+        expect(subject.attributes[1].range).to eq(Range.new(6, 13))
+      end
+    end
   end
 end

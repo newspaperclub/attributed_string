@@ -26,13 +26,26 @@ class AttributedString
   end
 
   def fix
-    @attributes = @attributes.sort_by { |a| a.range.begin }.inject([]) do |attrs, a|
-      if !attrs.empty? && attributes_overlap?(attrs.last, a)
-        attrs[0...-1] + [merge_attributes(attrs.last, a)]
-      else
-        attrs + [a]
+    # Group into identical data structures
+    grouped_attributes = @attributes.group_by { |a| a.data }.values
+
+    # Sort each group into order
+    grouped_attributes.each do |group|
+      group.sort_by! { |a| a.range.begin }
+    end
+
+    # Merge attributes in identical groups together
+    merged_attributes = grouped_attributes.map do |group|
+      group.inject([]) do |attrs, a|
+        if !attrs.empty? && attributes_overlap?(attrs.last, a)
+          attrs[0...-1] + [merge_attributes(attrs.last, a)]
+        else
+          attrs + [a]
+        end
       end
     end
+
+    @attributes = merged_attributes.flatten
   end
 
   private
