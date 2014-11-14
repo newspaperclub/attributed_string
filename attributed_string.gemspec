@@ -5,10 +5,11 @@ require "attributed_string/version"
 Gem::Specification.new do |s|
   s.name        = "attributed_string"
   s.version     = AttributedString::VERSION
+  s.licenses    = ['MIT']
   s.authors     = ["Tom Taylor"]
   s.email       = ["tom@newspaperclub.com"]
-  s.homepage    = "http://www.newspaperclub.com"
-  s.summary     = "Implements an AttributedString class, marking up a String with an array of attributes that contain data applied to a range of the String."
+  s.homepage    = "https://github.com/newspaperclub/attributed_string"
+  s.summary     = "A String class, but with attributes marking data at specific ranges."
 
   s.files = Dir["lib/**/*"] + ["Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
