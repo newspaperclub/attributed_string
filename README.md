@@ -17,4 +17,7 @@ attributed_string = AttributedString.new(string, [attribute])
 
 # This prepends another AttributedString, but keeps track of the position of the original attributes.
 attributed_string.prepend(another_attributed_string)
+
+# Coalesces overlapping attributes of identical data
+attributed_string.fix
 ```
