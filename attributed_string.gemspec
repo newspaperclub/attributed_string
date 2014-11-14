@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Tom Taylor"]
   s.email       = ["tom@newspaperclub.com"]
   s.homepage    = "http://www.newspaperclub.com"
-  s.summary     = ""
+  s.summary     = "Implements an AttributedString class, marking up a String with an array of attributes that contain data applied to a range of the String."
 
   s.files = Dir["lib/**/*"] + ["Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
